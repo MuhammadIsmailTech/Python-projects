@@ -210,11 +210,11 @@ The login window will appear.
 
 ---
 
-# Screenshots
-
 ## Login Window
 
 Displays username and password fields for system access.
+Enter usernmae: admin
+password: 1234
 
 ## Main Dashboard
 
@@ -271,3 +271,4 @@ This project helped in understanding:
 BS Computer Science Student
 
 ---
+
