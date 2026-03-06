@@ -9,8 +9,6 @@ This project demonstrates the integration of **Python programming**, **database 
 
 The application is designed for educational institutions to manage student data in a structured and user-friendly way.
 
----
-
 # Objectives of the Project
 
 The main objectives of this project are:
@@ -21,7 +19,6 @@ The main objectives of this project are:
 * To provide a graphical interface for easy interaction.
 * To export student data for external use.
 
----
 
 # Technologies Used
 
@@ -32,8 +29,6 @@ The main objectives of this project are:
 | MySQL           | Database used to store student records        |
 | MySQL Workbench | Database management tool                      |
 | VS Code         | Development environment                       |
-
----
 
 # System Features
 
@@ -87,15 +82,11 @@ Allows users to quickly reset all input fields.
 
 The table automatically refreshes after any add, update, or delete operation.
 
----
-
 # Database Design
 
 The project uses a **MySQL database** named:
 
-```
 student_management
-```
 
 ### Table Structure
 
@@ -129,8 +120,6 @@ phone VARCHAR(15)
 );
 ```
 
----
-
 # System Architecture
 
 The system follows a simple architecture:
@@ -146,8 +135,6 @@ MySQL Database
 ```
 
 The GUI sends queries to the database and displays results to the user.
-
----
 
 # Project Structure
 
@@ -165,7 +152,6 @@ Student-Management-System
       ├── mysql_table.png
 ```
 
----
 
 # How to Run the Project
 
@@ -212,8 +198,8 @@ The login window will appear.
 
 ## Login Window
 
-Displays username and password fields for system access.
-Enter usernmae: admin
+Displays username and password fields for system access. <br>
+Enter usernmae: admin <br>
 password: 1234
 
 ## Main Dashboard
@@ -271,4 +257,5 @@ This project helped in understanding:
 BS Computer Science Student
 
 ---
+
 
