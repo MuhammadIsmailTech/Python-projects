@@ -194,7 +194,6 @@ python main.py
 
 The login window will appear.
 
----
 
 ## Login Window
 
@@ -210,9 +209,6 @@ Allows users to perform all student management operations.
 
 Shows student records stored in the database.
 
-(Add screenshots here in your report)
-
----
 
 # Advantages of the System
 
@@ -221,8 +217,6 @@ Shows student records stored in the database.
 * Reduces manual record keeping
 * Improves data organization
 * Simple and extendable architecture
-
----
 
 # Future Improvements
 
@@ -234,8 +228,6 @@ The following features can be added in future versions:
 * Web-based version using Flask or Django
 * Role-based authentication system
 * Dashboard analytics and charts
-
----
 
 # Conclusion
 
@@ -249,13 +241,8 @@ This project helped in understanding:
 * CRUD operations
 * Data management concepts
 
----
-
 # Author
 
 **Muhammad Ismail**
 BS Computer Science Student
-
----
-
 
