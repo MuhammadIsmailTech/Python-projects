@@ -23,7 +23,6 @@ class Account:
         print(f"Account Holder: {self.name}")
         print(f"Balance: {self.balance}\n")
 
-
 class BankSystem:
     def __init__(self):
         self.accounts = {}
@@ -84,7 +83,6 @@ class BankSystem:
                 break
             else:
                 print("Invalid choice. Try again.")
-
 
 if __name__ == "__main__":
     bank = BankSystem()
