@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>💬 WebSocket Chat</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    h2 {
+      color: #333;
+    }
+    #status {
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    #chat {
+      width: 90%;
+      max-width: 600px;
+      height: 350px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: #fff;
+      padding: 15px;
+      overflow-y: auto;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .msg {
+      margin: 8px 0;
+      padding: 8px 12px;
+      border-radius: 10px;
+      max-width: 80%;
+    }
+    .you {
+      background: #0078ff;
+      color: white;
+      align-self: flex-end;
+      margin-left: auto;
+    }
+    .other {
+      background: #ececec;
+      color: #222;
+      align-self: flex-start;
+    }
+    #input-area {
+      margin-top: 15px;
+      display: flex;
+      width: 90%;
+      max-width: 600px;
+      gap: 10px;
+    }
+    input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    button {
+      padding: 10px 18px;
+      background: #0078ff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #005fcc;
+    }
+  </style>
+</head>
+<body>
+  <h2>💬 WebSocket Chat</h2>
+  <div id="status">🕓 Connecting...</div>
+  <div id="chat"></div>
+  
+  <div id="input-area">
+    <input id="msg" placeholder="Type a message..." />
+    <button onclick="sendMsg()">Send</button>
+  </div>
+
+  <script>
+    const ws = new WebSocket("ws://localhost:8000");
+    const chat = document.getElementById("chat");
+    const status = document.getElementById("status");
+
+    ws.onopen = () => {
+      status.textContent = "✅ Connected to server";
+      status.style.color = "green";
+    };
+
+    ws.onclose = () => {
+      status.textContent = "❌ Disconnected from server";
+      status.style.color = "red";
+    };
+
+    ws.onerror = (error) => {
+      console.error("WebSocket Error:", error);
+      status.textContent = "⚠️ Connection error";
+      status.style.color = "orange";
+    };
+
+    ws.onmessage = (event) => {
+      const div = document.createElement("div");
+      div.classList.add("msg", "other");
+      div.textContent = event.data;
+      chat.appendChild(div);
+      chat.scrollTop = chat.scrollHeight;
+    };
+
+    function sendMsg() {
+      const msgInput = document.getElementById("msg");
+      const msg = msgInput.value.trim();
+      if (msg !== "") {
+        ws.send(msg);
+        const div = document.createElement("div");
+        div.classList.add("msg", "you");
+        div.textContent = msg;
+        chat.appendChild(div);
+        chat.scrollTop = chat.scrollHeight;
+        msgInput.value = "";
+      }
+    }
+
+    document.getElementById("msg").addEventListener("keydown", e => {
+      if (e.key === "Enter") sendMsg();
+    });
+  </script>
+</body>
+</html>

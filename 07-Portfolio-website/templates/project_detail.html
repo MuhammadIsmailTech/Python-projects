@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<article>
+  <h2>{{ project['title'] }}</h2>
+  <img src="{{ url_for('static', filename='img/' ~ project['image']) }}" alt="" class="feature">
+  <p class="tech">Tech: {{ project['tech'] }}</p>
+  <p>{{ project['long_desc'] }}</p>
+  {% if project['repo_url'] %}
+  <p><a class="btn" href="{{ project['repo_url'] }}" target="_blank">View repository</a></p>
+  {% endif %}
+  {% if project['live_url'] %}
+  <p><a class="btn" href="{{ project['live_url'] }}" target="_blank">Open live</a></p>
+  {% endif %}
+</article>
+{% endblock %}

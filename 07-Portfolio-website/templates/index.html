@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Welcome</h2>
+<p>Hi — I'm Muhammad. I'm a BS Computer Science student building projects in web, data, and automation. Here are latest projects:</p>
+
+<div class="grid">
+  {% for p in projects %}
+  <article class="card">
+    <img src="{{ url_for('static', filename='img/' ~ p['image']) }}" alt="" class="thumb">
+    <h3>{{ p['title'] }}</h3>
+    <p>{{ p['short_desc'] }}</p>
+    <p><a href="{{ url_for('project_detail', project_id=p['id']) }}" class="btn">View</a></p>
+  </article>
+  {% endfor %}
+</div>
+
+<p><a class="btn" href="{{ url_for('projects') }}">See all projects</a></p>
+{% endblock %}

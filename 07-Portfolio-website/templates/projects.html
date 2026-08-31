@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Projects</h2>
+<div class="grid">
+  {% for p in projects %}
+  <article class="card">
+    <img src="{{ url_for('static', filename='img/' ~ p['image']) }}" alt="" class="thumb">
+    <h3>{{ p['title'] }}</h3>
+    <p>{{ p['short_desc'] }}</p>
+    <div class="meta">Tech: {{ p['tech'] }}</div>
+    <p>
+      <a class="btn" href="{{ url_for('project_detail', project_id=p['id']) }}">Details</a>
+      {% if p['repo_url'] %}
+      <a class="btn secondary" href="{{ p['repo_url'] }}" target="_blank">Repo</a>
+      {% endif %}
+    </p>
+  </article>
+  {% endfor %}
+</div>
+{% endblock %}

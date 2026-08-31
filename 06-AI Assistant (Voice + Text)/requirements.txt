@@ -1,0 +1,4 @@
+speechrecognition
+pyttsx3
+pyaudio; platform_system == "Windows" or platform_system == "Linux"
+openai

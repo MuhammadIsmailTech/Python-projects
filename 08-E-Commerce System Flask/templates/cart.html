@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Your Cart</h1>
+
+{% for item in items %}
+<p>
+    {{ item.name }} - Rs {{ item.price }}
+    <a href="/remove/{{ item.id }}">Remove</a>
+</p>
+{% endfor %}
+
+<h2>Total: Rs {{ total }}</h2>
+
+{% endblock %}
