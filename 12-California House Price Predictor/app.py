@@ -1,15 +1,17 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import joblib
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.ensemble import RandomForestRegressor
 
 from sklearn.metrics import (
     mean_absolute_error,
     mean_squared_error,
     r2_score
 )
-from sklearn.model_selection import train_test_split
-from sklearn.inspection import permutation_importance
  
 # PAGE CONFIGURATION
 
@@ -31,16 +33,123 @@ def load_data():
 
 # LOAD MODEL
  
-@st.cache_resource
-def load_model():
+# LOAD MODEL
 
-    return joblib.load(
-        "models/house_price_model.pkl"
+@st.cache_resource
+def load_model(data):
+
+    # Create engineered features
+    model_data = data.copy()
+
+    model_data["bedroom_ratio"] = (
+        model_data["total_bedrooms"] /
+        model_data["total_rooms"]
     )
+
+    model_data["rooms_per_household"] = (
+        model_data["total_rooms"] /
+        model_data["households"]
+    )
+
+    # Features
+    X = model_data.drop(
+        "median_house_value",
+        axis=1
+    )
+
+    # Target
+    y = model_data["median_house_value"]
+
+    # Numerical features
+    numeric_features = [
+        "longitude",
+        "latitude",
+        "housing_median_age",
+        "total_rooms",
+        "total_bedrooms",
+        "population",
+        "households",
+        "median_income",
+        "bedroom_ratio",
+        "rooms_per_household"
+    ]
+
+    # Categorical features
+    categorical_features = [
+        "ocean_proximity"
+    ]
+
+    # Numerical preprocessing
+    numeric_transformer = Pipeline(
+        steps=[
+            (
+                "imputer",
+                SimpleImputer(strategy="median")
+            )
+        ]
+    )
+
+    # Categorical preprocessing
+    categorical_transformer = Pipeline(
+        steps=[
+            (
+                "imputer",
+                SimpleImputer(
+                    strategy="most_frequent"
+                )
+            ),
+            (
+                "onehot",
+                OneHotEncoder(
+                    handle_unknown="ignore",
+                    sparse_output=False
+                )
+            )
+        ]
+    )
+
+    # Combine preprocessing
+    preprocessor = ColumnTransformer(
+        transformers=[
+            (
+                "numeric",
+                numeric_transformer,
+                numeric_features
+            ),
+            (
+                "categorical",
+                categorical_transformer,
+                categorical_features
+            )
+        ]
+    )
+
+    # Random Forest model
+    model = Pipeline(
+        steps=[
+            (
+                "preprocessor",
+                preprocessor
+            ),
+            (
+                "model",
+                RandomForestRegressor(
+                    n_estimators=200,
+                    random_state=42,
+                    n_jobs=-1
+                )
+            )
+        ]
+    )
+
+    # Train model
+    model.fit(X, y)
+
+    return model
 
 
 data = load_data()
-model = load_model()
+model = load_model(data)
 
 # PAGE STYLE
 
